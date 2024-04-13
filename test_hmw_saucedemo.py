@@ -43,8 +43,8 @@ class Test_Saucedemocom:
  
     @pytest.mark.parametrize("username, password", readInvalidDataFromExcel())  
     def test_invalid_login(self, username, password):
-        userNameInput = self.driver.find_element(By.ID, username_id)
-        passwordInput = self.driver.find_element(By.ID, password_id)
+        userNameInput = self.driver.find_element(By.ID, USER_NAME_ID)
+        passwordInput = self.driver.find_element(By.ID, PASSWORD_ID)
         userNameInput.send_keys(username)
         sleep(5)
         passwordInput.send_keys(password)
@@ -56,13 +56,13 @@ class Test_Saucedemocom:
     
         
     def test_basket_product_number(self):   
-        userNameInput = self.driver.find_element(By.ID, username_id)
+        userNameInput = self.driver.find_element(By.ID, USER_NAME_ID)
         userNameInput.send_keys("standard_user")
         sleep(2)
-        passwordInput = self.driver.find_element(By.ID, password_id)
+        passwordInput = self.driver.find_element(By.ID, PASSWORD_ID)
         passwordInput.send_keys("secret_sauce")
         sleep(2)
-        loginButton = self.driver.find_element(By.ID, login_button_id)
+        loginButton = self.driver.find_element(By.ID, LOGIN_BUTTON_ID)
         loginButton.click() 
         addButton = self.driver.find_element(By.ID, "add-to-cart-sauce-labs-fleece-jacket")
         addButton.click()
@@ -73,15 +73,15 @@ class Test_Saucedemocom:
      
             
     def test_add_basket(self):
-        userNameInput = self.driver.find_element(By.ID, username_id)
+        userNameInput = self.driver.find_element(By.ID, USER_NAME_ID)
         self.waitForElementVisiable(((By.ID,"user-name")),10)
         userNameInput.send_keys("standard_user")
        
         self.waitForElementVisiable(((By.ID,"password")),10)
-        passwordInput = self.driver.find_element(By.ID, password_id)
+        passwordInput = self.driver.find_element(By.ID, PASSWORD_ID)
         passwordInput.send_keys("secret_sauce")
       
-        loginButton = self.driver.find_element(By.ID, login_button_id)
+        loginButton = self.driver.find_element(By.ID, LOGIN_BUTTON_ID)
         loginButton.click() 
         addButton = self.driver.find_element(By.ID, "add-to-cart-sauce-labs-fleece-jacket")
         addButton.click()
@@ -100,10 +100,10 @@ class Test_Saucedemocom:
         sleep(2)
       
     def test_emptyPassword_login_test(self): 
-      userNameInput = self.driver.find_element(By.ID, username_id)
+      userNameInput = self.driver.find_element(By.ID, USER_NAME_ID)
       userNameInput.send_keys("standard_user")
      
-      loginButton = self.driver.find_element(By.ID, login_button_id)
+      loginButton = self.driver.find_element(By.ID, LOGIN_BUTTON_ID)
       loginButton.click()
       errorMassage = self.driver.find_element(By.XPATH, "//*[@id='login_button_container']/div/form/div[3]/h3")
       expected_error_message = "Epic sadface: Password is required"
@@ -111,25 +111,25 @@ class Test_Saucedemocom:
   
    
     def test_exist_userName_password_login(self):
-        userNameInput = self.driver.find_element(By.ID, username_id)
+        userNameInput = self.driver.find_element(By.ID, USER_NAME_ID)
         userNameInput.send_keys("locked_out_user")
-        passwordInput = self.driver.find_element(By.ID, password_id)
+        passwordInput = self.driver.find_element(By.ID, PASSWORD_ID)
         passwordInput.send_keys("secret_sauce")
-        loginButton = self.driver.find_element(By.ID, login_button_id)
+        loginButton = self.driver.find_element(By.ID, LOGIN_BUTTON_ID)
         loginButton.click()
         errorMassage = self.driver.find_element(By.XPATH, "//*[@id='login_button_container']/div/form/div[3]/h3")
         testResult = "Epic sadface: Sorry, this user has been locked out."
         assert errorMassage.text == testResult
         
     def test_successful_login_and_product_display(self):
-         userNameInput = self.driver.find_element(By.ID, username_id)
+         userNameInput = self.driver.find_element(By.ID, USER_NAME_ID)
          userNameInput.send_keys("standard_user")
          sleep(2)
-         passwordInput = self.driver.find_element(By.ID, password_id)
+         passwordInput = self.driver.find_element(By.ID, PASSWORD_ID)
          passwordInput.send_keys("secret_sauce")
          sleep(2)
          #loginButton = self.driver.find_element(By.ID, login_button_id)
-         loginButton = WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,login_button_id)))
+         loginButton = WebDriverWait(self.driver,5).until(ec.visibility_of_element_located((By.ID,LOGIN_BUTTON_ID)))
          loginButton.click()
     
          expectedUrl = "https://www.saucedemo.com/inventory.html"
