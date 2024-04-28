@@ -1,0 +1,48 @@
+name: Python Selenium and JMeter Test
+
+on:
+  push:
+    branches:
+      - main  # Ana dalınıza uygun bir isim verin.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Python tests
+      run: |
+        python test.py
+
+  jmeter_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Download JMeter
+      run: |
+        wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.3.tgz
+        tar -xf apache-jmeter-5.4.3.tgz
+
+    - name: Run JMeter test
+      run: |
+        ./apache-jmeter-5.4.3/bin/jmeter -n -t your_test_plan.jmx -l results.jtl
